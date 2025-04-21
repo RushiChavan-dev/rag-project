@@ -5,7 +5,7 @@
 Clone this repository:
 
 ```bash
-git clone https://github.com/KirtiTakrani13/RAG.git
+git clone https://github.com/RushiChavan-Dev/rag-try
 ```
 
 ## Backend Environment Setup
@@ -28,8 +28,6 @@ HUGGINGFACEHUB_API_TOKEN=your_huggingface_token
 
 - **OpenAI API Key**: Obtain your key from [OpenAI Platform](https://platform.openai.com/api-keys).
 - **Hugging Face API Token**: Obtain your token from [Hugging Face](https://huggingface.co/settings/tokens).
-
-> **Note**: Shyftlabs team members have been provided these API keys via email. Feel free to use those or your own OpenAI API Key.
 
 ## Frontend Environment Setup
 
@@ -143,15 +141,6 @@ and the backend at [http://localhost:8000](http://localhost:8000).
 - **Search:** Semantic and keyword search capabilities.
 - **Streaming:** Real-time streaming of the final output to the user.
 
-### Demo Video
-
-Watch the demo video to see the application in action:
-
-
-
-
-https://github.com/user-attachments/assets/f74dffea-7266-4f36-897d-0d6b411728a4
-
 
 ## Assignment Requirements Status
 
@@ -169,5 +158,5 @@ https://github.com/user-attachments/assets/f74dffea-7266-4f36-897d-0d6b411728a4
 ## Contact & Support
 
 For questions or issues, please open an issue in this repository or contact the maintainer directly.
-email: kirtitakrani40@gmail.com 
+email: rushi.chavan33@gmail.com 
 
