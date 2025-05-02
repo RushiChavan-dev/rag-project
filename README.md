@@ -5,7 +5,7 @@
 Clone this repository:
 
 ```bash
-git clone https://github.com/RushiChavan-Dev/rag-try
+git clone https://github.com/RushiChavan-Dev/rag-project
 ```
 
 ## Backend Environment Setup
