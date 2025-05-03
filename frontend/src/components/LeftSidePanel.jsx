@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaFilePdf } from "react-icons/fa"; // Import a PDF file icon from react-icons
 import api from "@/api"; // Import API functions
+import { useLocation } from "react-router-dom";
 
 function LeftSidePanel() {
+  const { pathname } = useLocation();
   const [file, setFile] = useState(null);
   const [isUrlMode, setIsUrlMode] = useState(false);
   const [url, setUrl] = useState("");
@@ -11,8 +13,35 @@ function LeftSidePanel() {
   const [isHtmlMode, setIsHtmlMode] = useState(false); // New state for HTML mode
   const [htmlUrl, setHtmlUrl] = useState(""); // New state for HTML URL
 
+  const routeModes = {
+    "/": ["summary"], // Home page
+    "/ocr": ["ocr"], // OCR-only page
+    // "/translate": ["translate", "summary"], // New page example
+    // add more routes as you spin them up...
+  };
+  const availableModes =
+    routeModes[pathname] ??
+    Object.values(routeModes)
+      .flat()
+      .filter((v, i, a) => a.indexOf(v) === i);
+  const [mode, setMode] = useState(availableModes[0]);
+  const showManualSwitcher = availableModes.length > 1;
+
+  useEffect(() => {
+    // 1️⃣ log before anything else
+    console.log(
+      `🧭 Navigated to ${location.pathname}; ` +
+        `availableModes = [${availableModes.join(", ")}], ` +
+        `defaulting to "${availableModes[0]}"`
+    );
+
+    // 2️⃣ now actually update your state
+    setMode(availableModes[0]);
+  }, [availableModes]);
+
+  // ==== Upload PDF FILE START ===
   // Handle file selection and upload
-  const handleFileUpload = async (event) => {
+  const handlePDFFileUpload = async (event) => {
     const uploadedFile = event.target.files[0];
     if (!uploadedFile || uploadedFile.type !== "application/pdf") {
       alert("Please upload a valid PDF file.");
@@ -57,6 +86,8 @@ function LeftSidePanel() {
       setUploading(false);
     }
   };
+
+  // ==== Upload PDF FILE END ===
 
   // Handle URL input change
   const handleUrlChange = (event) => {
@@ -170,6 +201,24 @@ function LeftSidePanel() {
 
   return (
     <div className="w-1/4 bg-gray-50 p-6 border-r border-gray-200">
+      {/* Mode switcher */}
+      {showManualSwitcher && (
+        <div className="mode-switcher">
+          {availableModes.map((m) => (
+            <label key={m} className="mr-4">
+              <input
+                type="radio"
+                name="mode"
+                value={m}
+                checked={mode === m}
+                onChange={() => setMode(m)}
+              />{" "}
+              {m.toUpperCase()}
+            </label>
+          ))}
+        </div>
+      )}
+
       {/* Welcome Message */}
       <div className="mt-6 font-urbanist text-primary-blue text-xl font-light space-y-2">
         <p>Please Upload File or Enter URL!</p>
@@ -253,7 +302,7 @@ function LeftSidePanel() {
               type="file"
               accept="application/pdf"
               className="hidden"
-              onChange={handleFileUpload}
+              onChange={handlePDFFileUpload}
             />
           </label>
 
