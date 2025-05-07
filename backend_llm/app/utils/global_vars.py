@@ -1,4 +1,6 @@
 from threading import Lock
+
+from langchain_huggingface import HuggingFaceEmbeddings
 from app.utils.settings import FAISS_INDEX_PATH, HUGGINGFACE_EMBEDDING_MODEL, HUGGINGFACEHUB_API_TOKEN
 from app.utils.vector_db import create_vector_db, load_vector_db
 # from langchain_openai.embeddings import OpenAIEmbeddings
@@ -35,10 +37,9 @@ class GlobalState:
         # self.inference_client = InferenceClient(token=HUGGINGFACEHUB_API_TOKEN)
         # self.embedding_model = HUGGINGFACE_EMBEDDING_MODEL
 
-        self.embedding_model = HuggingFaceInferenceAPIEmbeddings(
-            model_name=HUGGINGFACE_EMBEDDING_MODEL,
-            api_key=HUGGINGFACEHUB_API_TOKEN
-        )
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name=HUGGINGFACE_EMBEDDING_MODEL        
+            )
         # --- S2 END ---
 
 

@@ -9,7 +9,7 @@ load_dotenv(dotenv_path)
 CHUNK_SIZE = 1500
 CHUNK_OVERLAP = 200
 OPEN_AI_EMBEDDING_MODEL = "text-embedding-3-small"
-HUGGINGFACE_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+HUGGINGFACE_EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 LLM_MODEL = "gpt-4o-mini-search-preview"
 HUGGINGFACE_LLM_MODEL = "mistralai/mistral-7b-instruct"
 FAISS_INDEX_PATH = "faiss_index"
