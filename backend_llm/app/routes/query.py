@@ -40,8 +40,12 @@ async def query_rag(request: QueryRequest, state: GlobalState = Depends(get_glob
                 yield "data: {\"response\": \"No relevant documents found.\"}\n\n"
                 return
 
-            # Step 2: Initialize LLM
-            llm = initialize_llm()
+            # S2 - If want to use OPEN AI
+            # Step 2: Initialize LLM 
+            # llm = initialize_llm()
+
+            #S1 - If want to use Open Source
+            llm = None
 
             # Step 3: Generate response
             response_content = generate_response(llm, PROMPT_TEMPLATE, retrieved_results, query)
