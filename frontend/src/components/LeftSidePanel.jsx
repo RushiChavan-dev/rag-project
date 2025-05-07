@@ -224,120 +224,146 @@ function LeftSidePanel() {
         <p>Please Upload File or Enter URL!</p>
       </div>
 
-      {/* Toggle Checkbox for PDF URL */}
-      <div className="mt-4 flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="toggle-mode"
-          checked={isUrlMode}
-          onChange={() => {
-            setIsUrlMode(!isUrlMode);
-            setIsHtmlMode(false); // Ensure HTML mode is off when PDF URL mode is toggled
-          }}
-          className="w-4 h-4"
-        />
-        <label htmlFor="toggle-mode" className="text-sm text-gray-700">
-          Enter PDF URL instead of uploading a file
-        </label>
-      </div>
-
-      {/* Toggle Checkbox for HTML URL */}
-      <div className="mt-4 flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="toggle-html-mode"
-          checked={isHtmlMode}
-          onChange={() => {
-            setIsHtmlMode(!isHtmlMode);
-            setIsUrlMode(false); // Ensure PDF URL mode is off when HTML mode is toggled
-          }}
-          className="w-4 h-4"
-        />
-        <label htmlFor="toggle-html-mode" className="text-sm text-gray-700">
-          Enter HTML Website URL
-        </label>
-      </div>
-
-      {/* Conditional Rendering Based on Checkbox State */}
-      {isUrlMode ? (
-        // PDF URL Input Mode
-        <div className="mt-4">
-          <input
-            type="url"
-            placeholder="Enter PDF URL"
-            value={url}
-            onChange={handleUrlChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue"
-          />
-          <button
-            onClick={handleUrlSubmit}
-            className="mt-2 w-full bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Submit PDF URL
-          </button>
+      {/* Mode-Specific UI */}
+      {mode === "ocr" ? (
+        // OCR Mode UI
+        <div>
+          <p>OCR Mode: Upload an image or PDF for OCR processing.</p>
+          {/* Add file upload and processing logic here */}
         </div>
-      ) : isHtmlMode ? (
-        // HTML URL Input Mode
-        <div className="mt-4">
-          <input
-            type="url"
-            placeholder="Enter HTML Website URL"
-            value={htmlUrl}
-            onChange={handleHtmlUrlChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue"
-          />
-          <button
-            onClick={handleHtmlUrlSubmit}
-            className="mt-2 w-full bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Submit HTML Website URL
-          </button>
+      ) : mode === "summary" ? (
+        // Summary Mode UI
+        <div>
+          {/* Toggle Checkbox for PDF URL */}
+          <div className="mt-4 flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="toggle-mode"
+              checked={isUrlMode}
+              onChange={() => {
+                setIsUrlMode(!isUrlMode);
+                setIsHtmlMode(false); // Ensure HTML mode is off when PDF URL mode is toggled
+              }}
+              className="w-4 h-4"
+            />
+            <label htmlFor="toggle-mode" className="text-sm text-gray-700">
+              Enter PDF URL instead of uploading a file
+            </label>
+          </div>
+
+          {/* Toggle Checkbox for HTML URL */}
+          <div className="mt-4 flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="toggle-html-mode"
+              checked={isHtmlMode}
+              onChange={() => {
+                setIsHtmlMode(!isHtmlMode);
+                setIsUrlMode(false); // Ensure PDF URL mode is off when HTML mode is toggled
+              }}
+              className="w-4 h-4"
+            />
+            <label htmlFor="toggle-html-mode" className="text-sm text-gray-700">
+              Enter HTML Website URL
+            </label>
+          </div>
+
+          {/* Conditional Rendering Based on Checkbox State */}
+          {isUrlMode ? (
+            // PDF URL Input Mode
+            <div className="mt-4">
+              <input
+                type="url"
+                placeholder="Enter PDF URL"
+                value={url}
+                onChange={handleUrlChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue"
+              />
+              <button
+                onClick={handleUrlSubmit}
+                className="mt-2 w-full bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Submit PDF URL
+              </button>
+            </div>
+          ) : isHtmlMode ? (
+            // HTML URL Input Mode
+            <div className="mt-4">
+              <input
+                type="url"
+                placeholder="Enter HTML Website URL"
+                value={htmlUrl}
+                onChange={handleHtmlUrlChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue"
+              />
+              <button
+                onClick={handleHtmlUrlSubmit}
+                className="mt-2 w-full bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Submit HTML Website URL
+              </button>
+            </div>
+          ) : (
+            // File Upload Mode
+            <>
+              <label className="mt-4 cursor-pointer bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors block text-center">
+                Upload PDF
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={handlePDFFileUpload}
+                />
+              </label>
+
+              {/* File Display */}
+              {file && (
+                <div className="mt-4 flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                  {/* File Icon */}
+                  <div className="text-red-600">
+                    <FaFilePdf className="w-8 h-8" />
+                  </div>
+
+                  {/* File Details */}
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">
+                      {file.name}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {formatFileSize(file.size)}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {uploading && (
+                <p className="text-sm text-gray-500 mt-2">Uploading...</p>
+              )}
+            </>
+          )}
+
+          {/* Hide Process button when HTML mode is active */}
+          {!isHtmlMode && (
+            <button
+              onClick={handleProcess}
+              className="mt-4 w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+              disabled={processing}
+            >
+              {processing ? "Processing..." : "Process"}
+            </button>
+          )}
+        </div>
+      ) : mode === "translate" ? (
+        // Translation Mode UI
+        <div>
+          <p>Translation Mode: Enter a document or text to translate.</p>
+          {/* Add translation logic here */}
         </div>
       ) : (
-        // File Upload Mode
-        <>
-          <label className="mt-4 cursor-pointer bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors block text-center">
-            Upload PDF
-            <input
-              type="file"
-              accept="application/pdf"
-              className="hidden"
-              onChange={handlePDFFileUpload}
-            />
-          </label>
-
-          {/* File Display */}
-          {file && (
-            <div className="mt-4 flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
-              {/* File Icon */}
-              <div className="text-red-600">
-                <FaFilePdf className="w-8 h-8" />
-              </div>
-
-              {/* File Details */}
-              <div>
-                <p className="text-sm font-medium text-gray-900">{file.name}</p>
-                <p className="text-xs text-gray-500">
-                  {formatFileSize(file.size)}
-                </p>
-              </div>
-            </div>
-          )}
-          {uploading && (
-            <p className="text-sm text-gray-500 mt-2">Uploading...</p>
-          )}
-        </>
-      )}
-
-      {/* Hide Process button when HTML mode is active */}
-      {!isHtmlMode && (
-        <button
-          onClick={handleProcess}
-          className="mt-4 w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
-          disabled={processing}
-        >
-          {processing ? "Processing..." : "Process"}
-        </button>
+        // Default or other mode UI
+        <div>
+          <p>Default Mode: Upload or enter a document.</p>
+          {/* Add default upload logic here */}
+        </div>
       )}
     </div>
   );
