@@ -22,6 +22,7 @@ Fill in your environment variables:
 ```env
 OPENAI_API_KEY=your_openai_api_key
 HUGGINGFACEHUB_API_TOKEN=your_huggingface_token
+OPEN_ROUTER_API_KEY=your_open_router_api
 ```
 
 ### Obtaining API Keys:
@@ -38,6 +39,7 @@ cd ..
 cd frontend
 touch .env
 ```
+
 Fill in your environment variables for frontend:
 
 ```env
@@ -52,6 +54,7 @@ Update your frontend environment variables accordingly.
 - Docker Compose
 
 Recommended:
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 ## Building and Running the Project (With Docker)
@@ -64,18 +67,18 @@ Refer to the image below for the folder structure:
 
 Run the following commands from the project root directory:
 Make sure you are in the project root directory before running the following commands.  
-(In my case, the root directory was `kproject`.)  
+(In my case, the root directory was `kproject`.)
 
 ```bash
 docker-compose build
-docker-compose up 
+docker-compose up
 ```
 
 Access the frontend at: [http://localhost:3000](http://localhost:3000)
 
 Access the backend at: [http://localhost:8000](http://localhost:8000)
 
-----
+---
 
 ## Steps to Build and Run (Without Docker)
 
@@ -121,11 +124,12 @@ If you prefer to run the project without Docker, follow these steps:
 Now, you can access the frontend at [http://localhost:3000](http://localhost:3000)  
 and the backend at [http://localhost:8000](http://localhost:8000).
 
-----
+---
 
 ## Project Features
 
 - **Backend:**
+
   - FastAPI webserver.
   - Supports document uploads:
     - Local PDF files.
@@ -133,6 +137,7 @@ and the backend at [http://localhost:8000](http://localhost:8000).
     - HTML webpage support (e.g., [CERN HTML Example](https://info.cern.ch/hypertext/README.html)).
 
 - **Frontend:**
+
   - React-based application.
   - Supports uploading local PDF documents.
   - Supports entering PDF URLs directly (auto-downloads).
@@ -140,7 +145,6 @@ and the backend at [http://localhost:8000](http://localhost:8000).
 
 - **Search:** Semantic and keyword search capabilities.
 - **Streaming:** Real-time streaming of the final output to the user.
-
 
 ## Assignment Requirements Status
 
@@ -158,5 +162,4 @@ and the backend at [http://localhost:8000](http://localhost:8000).
 ## Contact & Support
 
 For questions or issues, please open an issue in this repository or contact the maintainer directly.
-email: rushi.chavan33@gmail.com 
-
+email: rushi.chavan33@gmail.com

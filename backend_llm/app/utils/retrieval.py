@@ -27,6 +27,45 @@ PROMPT_TEMPLATE = PromptTemplate(
     """
 )
 
+# at the top, next to PROMPT_TEMPLATE:
+DEMAND_LETTER_TEMPLATE = PromptTemplate(
+    input_variables=["context","question"],
+    template="""
+You are a legal assistant.  Using the facts below, draft a formal demand letter.
+
+Facts:
+{context}{question}
+
+Your letter should include:
+1. Date
+2. Claimant’s name & address
+3. Debtor’s name & address
+4. Amount due
+5. Deadline for payment
+6. Consequences of non-payment
+
+Please produce the full letter in standard business format.
+"""
+)
+
+
+
+EXTRACTION_PROMPT = PromptTemplate(
+    input_variables=["context", "question"],
+    template="""
+Extract these facts as JSON:
+- Jurisdiction
+- Date of Incident
+- Parties involved
+- Injuries
+- Medical Costs
+- Transport Costs
+
+Text:
+{context}
+"""
+)
+
 
 def bm25_search(documents, query, k=3):
     """

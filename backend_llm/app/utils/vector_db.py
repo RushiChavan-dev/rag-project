@@ -10,7 +10,6 @@ logger = get_logger()
 def create_vector_db(documents, embedding_model, save_path: str = FAISS_INDEX_PATH):
     try:
 
-
         db = FAISS.from_documents(documents, embedding_model)
         db.save_local(save_path)
         logger.info(f"FAISS database created and saved at {save_path}.")

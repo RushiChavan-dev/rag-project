@@ -13,8 +13,10 @@ class GlobalState:
     
     def __init__(self):
         self.logger = get_logger()
-        self.UPLOAD_DIR = "uploads"  # Define UPLOAD_DIR inside the class
+        self.UPLOAD_DIR = os.path.join("uploads", "summary_docs")  # Redefine UPLOAD_DIR directly
+        self.DEMAND_DIR = os.path.join("uploads", "demand_docs")
         os.makedirs(self.UPLOAD_DIR, exist_ok=True)  # Ensure directory exists
+        os.makedirs(self.DEMAND_DIR, exist_ok=True)
         # === Embedding Model Configuration ===
         # NOTE:
         # To use OpenAI embeddings:

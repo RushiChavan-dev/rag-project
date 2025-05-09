@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from app.utils.document_loader import load_and_chunk_documents
+from app.utils.document_splitter import load_and_chunk_documents
 from app.utils.settings import FAISS_INDEX_PATH
 from app.utils.global_vars import global_state, GlobalState
 from app.utils.vector_db import create_vector_db

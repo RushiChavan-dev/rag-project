@@ -94,10 +94,110 @@ async function uploadHtmlUrl(url) {
   return res.json(); // Return the parsed JSON response
 }
 
+// 1. Upload multiple demand documents (PDF, DOCX, PNG, etc.)
+async function uploadDemandDocs(files) {
+  const formData = new FormData();
+  for (const file of files) {
+    formData.append("files", file);
+  }
+
+  const res = await fetch(`${BASE_URL}/api/upload-demand-docs/`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data: await res.json() });
+  }
+
+  return res.json(); // { uploaded: [...] }
+}
+
+// 2. Process all uploaded demand documents (LLM extraction + vector indexing)
+async function processDemandDocs() {
+  const res = await fetch(`${BASE_URL}/api/process-demand-docs/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data: await res.json() });
+  }
+
+  return res.json(); // { status, documents_loaded, chunks_indexed, ... }
+}
+
+// 3. Generate a demand letter (RAG-based generation)
+async function generateDemandLetter(query = "q", top_k = 5) {
+  const res = await fetch(`${BASE_URL}/api/generate-demand-letter/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, top_k }),
+  });
+
+  // ✅ Log the full response
+
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data: await res.json() });
+  }
+  console.log("📬 Full demand letter response:", res.body);
+  return res.body; // Return response body for streaming
+}
+
+// 4. Clear all uploaded demand documents and related artifacts
+async function clearDemandDocs() {
+  const res = await fetch(`${BASE_URL}/api/clear-demand-docs/`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data: await res.json() });
+  }
+
+  return res.json(); // { deleted: [...], errors?: [...] }
+}
+
+// 5. List all uploaded demand document filenames
+async function listDemandDocs() {
+  const res = await fetch(`${BASE_URL}/api/list-demand-docs/`, {
+    method: "GET",
+  });
+
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data: await res.json() });
+  }
+
+  return res.json(); // { files: [...] }
+}
+
+// 6. Delete a specific document by filename
+async function deleteDemandDoc(filename) {
+  const res = await fetch(
+    `${BASE_URL}/api/delete-demand-doc/?filename=${encodeURIComponent(
+      filename
+    )}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data: await res.json() });
+  }
+
+  return res.json(); // { deleted: "filename" }
+}
+
 export default {
   processDocument,
   uploadPDF,
   queryRAG,
   uploadPDFUrl,
   uploadHtmlUrl,
+  uploadDemandDocs,
+  processDemandDocs,
+  generateDemandLetter,
+  clearDemandDocs,
+  listDemandDocs,
+  deleteDemandDoc,
 };
