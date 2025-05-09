@@ -57,3 +57,7 @@ def load_and_chunk_documents(file_path: Optional[str] = None, url: Optional[str]
         return []
     
     return chunk_documents(documents)
+
+
+def split_documents(docs: list) -> list:
+    return RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP,).split_documents(docs)
