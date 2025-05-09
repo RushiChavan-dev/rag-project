@@ -146,7 +146,16 @@ and the backend at [http://localhost:8000](http://localhost:8000).
 - **Search:** Semantic and keyword search capabilities.
 - **Streaming:** Real-time streaming of the final output to the user.
 
-## Assignment Requirements Status
+## Demo
+
+
+
+https://github.com/user-attachments/assets/c1abb712-5f55-44a4-88f5-af69afaf3c19
+
+
+
+
+## Feature
 
 ✅ Webserver via FastAPI  
 ✅ Streaming support  
